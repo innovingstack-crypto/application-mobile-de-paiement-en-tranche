@@ -1,0 +1,51 @@
+# IDE & Editor
+.vscode/
+.idea/
+.fleet/
+.nova/
+.zed/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.backup
+.env.local
+.env.production
+.env.*.local
+
+# Laravel specific
+/vendor/
+/node_modules/
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+/bootstrap/cache/
+.phpactor.json
+.phpunit.result.cache
+.phpunit.cache/
+
+# Testing
+phpunit.xml
+.phpunit.result.cache
+
+# OS specific
+.DS_Store
+Thumbs.db
+*.log
+
+# Auth
+/auth.json
+
+# Development files
+Homestead.json
+Homestead.yaml
+
+# IDE
+/.vscode/
+/.idea/
+
+# Other
+.qodo/

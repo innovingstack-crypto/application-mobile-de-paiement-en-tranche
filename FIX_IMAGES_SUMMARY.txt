@@ -1,0 +1,126 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                  RÉSOLUTION - IMAGES MANQUANTES PRODUITS                   ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+🎯 PROBLÈME:
+  ProductCard dans ProductsScreen n'affichait PAS les images
+  Mais HomeScreen affichait les images correctement
+
+═════════════════════════════════════════════════════════════════════════════
+
+🔍 3 CAUSES IDENTIFIÉES:
+
+1. ❌ ProductCard recevait un nouvel objet mal formaté
+   └─ Utilisait item.image au lieu de item.image_url
+   └─ Ne passait que des champs sélectionnés
+
+2. ❌ Hook useProductsData ne retournait pas les bons produits
+   └─ Retournait toujours products
+   └─ Oubliait filteredProducts quand catégorie sélectionnée
+
+3. ❌ Types Product conflictuels
+   └─ ProductService avait sa définition
+   └─ /types avait sa définition
+   └─ Confusion entre deux interfaces différentes
+
+═════════════════════════════════════════════════════════════════════════════
+
+✅ 4 SOLUTIONS APPLIQUÉES:
+
+1. ✅ app/(tabs)/products.tsx
+   └─ Passe item directement: product={item}
+   └─ Plus besoin de reconstruire l'objet
+   └─ handleProductClick(item) au lieu de handleProductClick(item.id)
+
+2. ✅ hooks/useProductsData.ts
+   └─ Retourne displayProducts (filteredProducts ou products)
+   └─ Logique: catégorie sélectionnée ? filteredProducts : products
+   └─ Affiche les bons produits selon le contexte
+
+3. ✅ lib/productService.ts
+   └─ Import: import { Product } from '@/types'
+   └─ Une seule source de vérité pour le type Product
+   └─ Plus de conflits de définitions
+
+4. ✅ app/(tabs)/index.tsx (cohérence)
+   └─ Passe product complet via productData JSON
+   └─ Même logique que ProductsScreen
+
+═════════════════════════════════════════════════════════════════════════════
+
+📊 AVANT/APRÈS:
+
+AVANT:
+  HomeScreen      → ProductCard ✅ Images affichées
+  ProductsScreen  → ProductCard ❌ PAS d'images
+
+APRÈS:
+  HomeScreen      → ProductCard ✅ Images affichées
+  ProductsScreen  → ProductCard ✅ Images affichées ← CORRIGÉ!
+  DetailScreen    → Carousel    ✅ Images affichées
+  Filtrage        → ProductCard ✅ Images + filtre OK
+
+═════════════════════════════════════════════════════════════════════════════
+
+🔧 FICHIERS MODIFIÉS: (4)
+
+1. app/(tabs)/products.tsx
+   - Ligne 31: Simplifier handleProductClick
+   - Ligne 107-133: Passer item directement au ProductCard
+
+2. hooks/useProductsData.ts
+   - Ligne 8: Ajouter filteredProducts au selector
+   - Ligne 31-32: Ajouter logique displayProducts
+   - Ligne 38: Retourner displayProducts
+
+3. lib/productService.ts
+   - Ligne 1-2: Importer Product depuis @/types
+   - Supprimer la définition locale de Product
+
+4. app/(tabs)/index.tsx (déjà fait)
+   - Passe product complet
+
+═════════════════════════════════════════════════════════════════════════════
+
+💡 CLÉS DU PROBLÈME:
+
+1. Ne pas recréer les objets
+   └─ Passer l'item directement du FlatList
+
+2. Utiliser les bons champs
+   └─ Backend retourne: image_url, secondary_images
+   └─ ProductCard cherche: image_url
+
+3. Synchroniser les types
+   └─ Une seule définition: @/types/index.ts
+
+4. Logique correcte du hook
+   └─ Retourner filteredProducts ou products selon contexte
+
+═════════════════════════════════════════════════════════════════════════════
+
+🧪 À VÉRIFIER:
+
+HomeScreen:
+  ✓ Produits avec images
+  ✓ Prix corrects
+  ✓ Clic fonctionne
+
+ProductsScreen:
+  ✓ Produits avec images ← NOUVEAU
+  ✓ Filtre par catégorie
+  ✓ Produits filtrés avec images ← NOUVEAU
+  ✓ Compteur correct
+  ✓ Clic fonctionne
+
+DetailScreen:
+  ✓ Image affichée
+  ✓ Carousel images
+  ✓ BNPL visible
+  ✓ Prix correct
+
+═════════════════════════════════════════════════════════════════════════════
+
+🎉 RÉSULTAT: ✅ IMAGES AFFICHÉES DANS PRODUCTSCREEN
+
+═════════════════════════════════════════════════════════════════════════════

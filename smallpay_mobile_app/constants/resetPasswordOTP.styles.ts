@@ -1,0 +1,90 @@
+import { StyleSheet } from 'react-native';
+
+export const resetPasswordOTPStyles = StyleSheet.create({
+  methodIndicator: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+    padding: 10,
+    backgroundColor: '#f1f5f9',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  methodText: {
+    marginLeft: 8,
+    fontSize: 16,
+    color: '#2563eb',
+    fontWeight: '600',
+  },
+  otpLabel: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1e293b',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  otpContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  otpInput: {
+    width: 48,
+    height: 56,
+    borderWidth: 1,
+    borderColor: '#cbd5e1',
+    borderRadius: 8,
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1e293b',
+  },
+  errorText: {
+    color: '#ef4444',
+    textAlign: 'center',
+    marginBottom: 15,
+    fontSize: 14,
+  },
+  infoText: {
+    color: '#64748b',
+    textAlign: 'center',
+    marginBottom: 15,
+    fontSize: 14,
+  },
+  resendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    flexWrap: 'wrap',
+  },
+  resendText: {
+    color: '#64748b',
+    fontSize: 14,
+    marginRight: 5,
+  },
+  resendLink: {
+    color: '#2563eb',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  resendLinkDisabled: {
+    color: '#94a3b8',
+  },
+  changeMethodButton: {
+    marginTop: 25,
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: '#f8fafc',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  changeMethodText: {
+    color: '#64748b',
+    fontSize: 14,
+    textAlign: 'center',
+    fontWeight: '500',
+  },
+});

@@ -1,0 +1,114 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # ============================================================================
+    # HEADER CONFIGURATION - CORS pour communication avec SmallPay_backend
+    # ============================================================================
+    
+    # Autoriser les requêtes CORS vers le backend
+    SetEnvIf Origin "^(http://localhost:[0-9]+|http://127\.0\.0\.1:[0-9]+|https://.*\.b4a\.app)$" CORS_ORIGIN=$0
+    Header set Access-Control-Allow-Origin "%{CORS_ORIGIN}e" env=CORS_ORIGIN
+    Header set Access-Control-Allow-Credentials "true"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS, PATCH"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With, Accept, Origin"
+
+    # Gérer les requêtes OPTIONS (preflight)
+    RewriteCond %{REQUEST_METHOD} ^OPTIONS$
+    RewriteRule ^(.*)$ $1 [R=200,L]
+
+    # ============================================================================
+    # ROUTING - Redirectionner les requêtes vers index.html (SPA)
+    # ============================================================================
+    
+    # Protéger les fichiers sensibles
+    RewriteCond %{REQUEST_FILENAME} \.env$ [OR]
+    RewriteCond %{REQUEST_FILENAME} \.env\.example$ [OR]
+    RewriteCond %{REQUEST_FILENAME} \.git/ [OR]
+    RewriteCond %{REQUEST_FILENAME} \.gitignore$ [OR]
+    RewriteCond %{REQUEST_FILENAME} app\.json$ [OR]
+    RewriteCond %{REQUEST_FILENAME} eas\.json$ [OR]
+    RewriteCond %{REQUEST_FILENAME} package\.json$ [OR]
+    RewriteCond %{REQUEST_FILENAME} tsconfig\.json$
+    RewriteRule ^ - [F,L]
+
+    # Fichiers et dossiers existants - laisser passer
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Tous les autres chemins vont à index.html (pour le routage SPA)
+    RewriteRule ^ index.html [QSA,L]
+
+    # ============================================================================
+    # CACHING - Optimisation pour les fichiers statiques
+    # ============================================================================
+    <FilesMatch "\.(ico|css|js|gif|jpeg|jpg|png|webp|svg|woff|woff2|ttf|eot|mp4|webm)$">
+        <IfModule mod_headers.c>
+            Header set Cache-Control "max-age=31536000, public, immutable"
+            Header set X-Content-Type-Options "nosniff"
+        </IfModule>
+    </FilesMatch>
+
+    # Pas de cache pour les fichiers HTML
+    <FilesMatch "\.html$">
+        <IfModule mod_headers.c>
+            Header set Cache-Control "max-age=300, must-revalidate"
+        </IfModule>
+    </FilesMatch>
+
+    # ============================================================================
+    # COMPRESSION
+    # ============================================================================
+    <IfModule mod_deflate.c>
+        AddOutputFilterByType DEFLATE text/plain
+        AddOutputFilterByType DEFLATE text/html
+        AddOutputFilterByType DEFLATE text/xml
+        AddOutputFilterByType DEFLATE text/css
+        AddOutputFilterByType DEFLATE text/javascript
+        AddOutputFilterByType DEFLATE application/xml
+        AddOutputFilterByType DEFLATE application/xhtml+xml
+        AddOutputFilterByType DEFLATE application/rss+xml
+        AddOutputFilterByType DEFLATE application/javascript
+        AddOutputFilterByType DEFLATE application/x-javascript
+        AddOutputFilterByType DEFLATE application/json
+    </IfModule>
+
+    # ============================================================================
+    # SÉCURITÉ
+    # ============================================================================
+    
+    # Désactiver l'indexation des répertoires
+    Options -Indexes
+
+    # Empêcher l'exécution de scripts PHP (c'est une app statique)
+    <FilesMatch "\.php$">
+        Deny from all
+    </FilesMatch>
+
+</IfModule>
+
+# ============================================================================
+# CONFIGURATION POUR MOD_HEADERS
+# ============================================================================
+<IfModule mod_headers.c>
+    # Sécurité des en-têtes
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ============================================================================
+# TYPE DE CONTENU
+# ============================================================================
+<IfModule mod_mime.c>
+    AddType application/json .json
+    AddType application/javascript .js
+    AddType application/x-typescript .ts
+    AddType application/x-typescript+react .tsx
+</IfModule>

@@ -1,0 +1,31 @@
+<IfModule mod_php.c>
+    # Augmenter les limites pour les uploads volumineux (fichiers KYC)
+    php_value post_max_size 50M
+    php_value upload_max_filesize 50M
+    php_value max_input_vars 10000
+    php_value memory_limit 384M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+</IfModule>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Rediriger tout vers public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Sécurité des en-têtes
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # CORS pour les uploads multipart
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+    Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With, Accept, X-CSRF-TOKEN"
+</IfModule>

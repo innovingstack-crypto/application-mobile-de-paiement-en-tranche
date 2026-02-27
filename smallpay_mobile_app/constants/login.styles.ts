@@ -1,0 +1,108 @@
+import { StyleSheet } from 'react-native';
+
+export const loginStyles = StyleSheet.create({
+  header: {
+    backgroundColor: '#2563eb', // More transparent for status bar visibility
+    paddingTop: 60,
+    paddingBottom: 80,
+    paddingHorizontal: 24,
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+  },
+  logoWrapper: {
+    alignSelf: 'center',
+    marginBottom: 16,
+    marginTop: -8,
+  },
+  backButton: {
+    marginBottom: 24,
+  },
+  headerTitle: {
+    fontSize: 32,
+    fontWeight: '800',
+    color: '#fff',
+    lineHeight: 38,
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    color: '#e0f2fe',
+    textAlign: 'center',
+    marginTop: 5,
+  },
+  card: {
+    flex: 1,
+    marginTop: -40,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+    padding: 24,
+  },
+  methodContainer: {
+    marginBottom: 20,
+    padding: 12,
+    backgroundColor: '#f8fafc',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  methodTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#64748b',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  methodOptions: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    gap: 10,
+  },
+  methodOption: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#cbd5e1',
+    backgroundColor: '#f1f5f9',
+  },
+  methodOptionActive: {
+    backgroundColor: '#2563eb',
+    borderColor: '#2563eb',
+  },
+  methodOptionText: {
+    marginLeft: 6,
+    fontSize: 13,
+    fontWeight: '500',
+    color: '#2563eb',
+  },
+  methodOptionTextActive: {
+    color: '#ffffff',
+  },
+  forgotPassword: {
+    alignSelf: 'flex-start',
+    marginVertical: 12,
+  },
+  forgotText: {
+    color: '#2563eb',
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  loginButton: {
+    marginTop: 8,
+  },
+  registerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 24,
+  },
+  registerText: {
+    color: '#64748b',
+  },
+  registerLink: {
+    color: '#2563eb',
+    fontWeight: '700',
+  },
+});

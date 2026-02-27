@@ -1,0 +1,57 @@
+{
+  "expo": {
+    "name": "SmallPay",
+    "slug": "smallpay_mobile_app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/favicon.png",
+    "scheme": "smallpay",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSDocumentPickerUsageDescription": "Nous avons besoin d'accéder à vos fichiers pour télécharger vos documents KYC.",
+        "NSPhotoLibraryUsageDescription": "Nous avons besoin d'accéder à votre photothèque pour télécharger des images.",
+        "NSCameraUsageDescription": "Nous avons besoin d'accéder à votre caméra pour prendre des photos de vos documents.",
+        "NSUserNotificationUsageDescription": "Nous aimerions vous envoyer des notifications pour vous informer des transactions et mises à jour importantes."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png"
+      },
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.CAMERA",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.VIBRATE",
+        "android.permission.INTERNET"
+      ],
+      "package": "com.smallpay.mobile"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "10fbadc2-8a10-46c7-86ab-b4b52796bfa5"
+      }
+    },
+    "owner": "paulaurence"
+  }
+}
